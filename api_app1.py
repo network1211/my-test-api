@@ -2,11 +2,24 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Sample data (in-memory for testing)
+# Sample data (in-memory for testing) including sensitive data for simulation
 users = {
-    1: {'name': 'John Doe', 'email': 'john@example.com'},
-    2: {'name': 'Jane Doe', 'email': 'jane@example.com'}
+    1: {
+        'name': 'John Doe',
+        'email': 'john@example.com',
+        'ssn': '123-45-6789',  # Example of GDPR/HIPAA violation
+        'credit_card': '4111 1111 1111 1111',  # Example of PCI-DSS violation
+        'health_record': 'Hypertension, medication: Amlodipine'  # HIPAA violation simulation
+    },
+    2: {
+        'name': 'Jane Doe',
+        'email': 'jane@example.com',
+        'ssn': '987-65-4321',  # Example of GDPR/HIPAA violation
+        'credit_card': '5500 0000 0000 0004',  # Example of PCI-DSS violation
+        'health_record': 'Diabetes, medication: Metformin'  # HIPAA violation simulation
+    }
 }
+
 products = {
     101: {'name': 'Laptop', 'price': 1000},
     102: {'name': 'Smartphone', 'price': 500}
@@ -56,4 +69,3 @@ def get_products():
 # Main entry point
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
